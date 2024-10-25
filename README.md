@@ -1,7 +1,5 @@
 # MoE-TCR: Mixture-of-Experts Framework for pan-specific TCR-Epitope Binding Prediction
 
-This repository provides a framework for training and predicting TCR-epitope binding using the TPNet model. It leverages PyTorch Lightning and WandB for model training, logging, and evaluation.
-
 ## Installation
 
 Before running the training or prediction scripts, ensure that all dependencies are installed. You can do so by following the steps below:
