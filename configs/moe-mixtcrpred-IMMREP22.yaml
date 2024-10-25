@@ -1,0 +1,54 @@
+logdir: ./log
+
+model_cls: moe
+model_config:
+  moe_emb_vocab: 33
+  moe_emb_size: 20
+  gate_input_size: 300
+  num_experts: 20
+  noisy_gating: True
+  k: 2
+  loss_coef: 0.01
+  expert_cls: mixtcrpred
+  expert_cfg:
+    embedding_dim: 128
+    hidden_dim: 1024
+    num_heads: 4
+    num_layers: 4
+    dropout: 0.2
+    padding: [15, 20, 20, 10, 10, 10, 10]
+    padding_idx: 0
+
+train:
+  seed: 42
+  batch_size: 256
+  epochs: 200
+
+  optimizer: Adam
+  optimizer_config:
+    lr: 0.0001
+  checkpoint_monitor: val_auc01 
+  checkpoint_monitor_mode: max 
+  earlystop_patience: 40
+
+  scheduler: cosine_warmup
+  scheduler_config:
+    warmup: 1000
+    max_iters: 500
+
+bind_dataset:
+  train_data: ./data/IMMREP22/train_set.csv
+  val_data: ./data/IMMREP22/train_set.csv
+  test_data: ./data/IMMREP22/test_set.csv
+  esm_model: esm2_t30_150M_UR50D 
+  esm_alphabet: ESM-1b
+  sample_weight_dict: weight 
+  peptide_len: 15
+  A1_len: 10
+  A2_len: 10
+  A3_len: 20
+  B1_len: 10
+  B2_len: 10
+  B3_len: 20
+
+

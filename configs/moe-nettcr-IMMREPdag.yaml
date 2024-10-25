@@ -1,0 +1,54 @@
+logdir: ./log
+
+model_cls: moe
+model_config:
+  moe_emb_vocab: 33
+  moe_emb_size: 20
+  gate_input_size: 240
+  num_experts: 20
+  noisy_gating: True
+  k: 2
+  loss_coef: 0.01
+  expert_cls: nettcr
+  expert_cfg:
+    embed_dim: 20
+    dropout: 0.6
+
+train:
+  seed: 42
+  batch_size: 64
+  epochs: 200
+
+  optimizer: Adam
+  optimizer_config:
+    lr: 0.001
+  checkpoint_monitor: val_auc01 
+  checkpoint_monitor_mode: max 
+  earlystop_patience: 80
+
+  scheduler: ReduceLROnPlateau
+  scheduler_config:
+    mode: min
+    factor: 0.1
+    patience: 20
+    verbose: True
+    min_lr: 1.0e-6
+  scheduler_monitor: val_loss 
+
+
+bind_dataset:
+  train_data: ./data/IMMREP22/train_redundancy_reduced_set.csv
+  val_data: ./data/IMMREP22/train_redundancy_reduced_set.csv
+  test_data: ./data/IMMREP22/test_set.csv
+  esm_model: esm2_t30_150M_UR50D 
+  esm_alphabet: ESM-1b
+  sample_weight_dict: weight
+  peptide_len: 12
+  A1_len: 7
+  A2_len: 8
+  A3_len: 22
+  B1_len: 6
+  B2_len: 7
+  B3_len: 23
+
+
