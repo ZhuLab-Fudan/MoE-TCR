@@ -8,7 +8,6 @@ wandb*.json
 ckpt/
 *.code-workspace
 outputs/
-**/*.txt
 **/lightning_logs/
 **/inference_outputs/
 .hydra
